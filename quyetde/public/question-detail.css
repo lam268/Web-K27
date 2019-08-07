@@ -1,0 +1,18 @@
+* {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 30px;
+    color: white;
+    background-color: black;
+  }
+  
+li {
+    display: inline-block;
+    padding: 20px;
+}

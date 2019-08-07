@@ -1,0 +1,150 @@
+* {
+    box-sizing: border-box;
+    margin: 0px;
+    padding: 0px;
+}
+.container {
+    background-color: #EBEBEB;
+    min-height: 100vh;
+    display: flex;
+}
+
+.register {
+    min-height: 100vh;
+    width: 70%;
+    border: 1px solid #cfcfcf;
+    margin: 20px;
+    background-color: white;
+    padding: 30px;
+}
+
+.sidebar {
+    min-height: 100vh;
+    width: 30%;
+    border: 1px solid #cfcfcf;
+    margin: 20px;
+    background-color: white;
+    padding: 30px;
+}
+ 
+.register2 {
+    font-size: 30px;
+    margin-top: 30px;
+}
+
+.title {
+    font-size: 15px;
+    margin-top: 50px;
+}
+
+.header {
+    color: red;
+    font-style: bold;
+    font-size: 20px;
+    margin-top: 20px;
+}
+
+.sao {
+    color: red;
+}
+.button {
+    background-color: red;
+    color: white;
+    display: block;
+    padding: 5px 12px;
+    margin-top: 30px;
+}
+
+.contact {
+    margin-top: 20px;
+}
+
+.contact div {
+    margin-top: 20px;
+}
+
+.contact label {
+    display: inline-block;
+    width: 30%;
+}
+
+.contact input {
+    width: 60%;
+}
+.row {
+    margin-top: 20px;
+}
+.row div {
+    margin-top: 20px;
+}
+.row label {
+    display: inline-block;
+    width: 30%;
+}
+.row input {
+    width: 60%;
+}
+.area {
+    margin-top: 20px;
+}
+
+.area label {
+    display: inline-block;
+    width: 30%;
+}
+
+.pass div {
+    margin-top: 20px;
+}
+
+.pass label {
+    display: inline-block;
+    width: 30%;
+}
+
+.pass input {
+    width: 60%;
+}
+
+.area label {
+    width: 30%;
+}
+.area textarea {
+    width:60%;
+}
+
+.checkbox {
+    margin-top: 30px;
+    text-align: right;
+}
+
+.sidebar input {
+    position: relative;
+    top: 20%;
+    left: 30%;
+    padding: 5px 12px;
+}
+
+
+.search-btn {
+    color: white;
+    position: relative;
+    left: 30%;
+    align-items: center;
+    border-color: black;
+    background-color: red;
+    padding: 5px 12px;
+}
+
+.row2 {
+    font-size: 13px;
+    color: #cfcfcf;
+    margin-top: 20px;
+}
+
+.error-message {
+    display: block;
+    color: red;
+    text-align: left;
+    font-size: 13px;
+}

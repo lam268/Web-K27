@@ -1,0 +1,116 @@
+* {
+    box-sizing: border-box;
+    margin: 0px;
+    padding: 0px;
+}
+.container {
+    background-color: #EBEBEB;
+    min-height: 100vh;
+}
+
+.first {
+    min-height: 40vh;
+    width: 100%; 
+}
+
+.centered {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: white;
+  }
+
+.image {
+    display: block;
+    width: 100%;
+    height: 40vh;
+  }
+  
+.overlay {
+    position: absolute;
+    top: 0;
+    height: 40vh;
+    width: 100%;
+    opacity: 0;
+    transition: .5s ease;
+}
+  
+.first:hover .overlay {
+    opacity: 1;
+  }
+  
+.text {
+    color: white;
+    font-size: 20px;
+    position: absolute;
+    top: 50%;
+    left: 20%;
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    text-align: center;
+}   
+
+.second {
+    padding-top: 30px;
+    padding-left: 30px;
+}
+
+.third {
+    display: flex;
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+.third .box1 {
+    display: flex;
+    flex-direction: column;
+    padding-left: 50px;
+    box-sizing: border-box;
+    width: 33%;
+    position: relative;
+}
+
+.box1 img {
+    height: 18vh;
+    width: 100%;
+    padding-top: 10px;
+}
+
+.third .box2 {
+    display: flex;
+    flex-direction: column;
+    padding-left: 50px;
+    box-sizing: border-box;
+    width: 33%;
+}
+
+.box2 img {
+    height: 18vh;
+    width: 100%;
+    padding-top: 10px;
+} 
+
+.third .box3 {
+    width: 30%;
+    padding-left: 50px;
+}
+
+.box3 img {
+    height: 40vh;
+    width: 100%;
+    padding-top: 10px;
+}
+
+
+.fourth {
+    display: flex;
+    background-color: white;
+    border: 1px solid silver;
+}
+
+.fourth div {
+    padding: 20px;
+}

@@ -1,0 +1,31 @@
+* {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+
+.container {
+    width: 100%;
+    padding: 30px;
+}
+
+.container textarea{
+    width: 100%;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 30px;
+    color: white;
+    background-color: black;
+  }
+  
+  li {
+    display: inline;
+    padding: 20px;
+  }
+
+  li div {
+    display: inline;
+}
