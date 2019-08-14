@@ -10,9 +10,33 @@ ul {
     padding: 30px;
     color: white;
     background-color: black;
-  }
-  
+}
+
 li {
     display: inline-block;
     padding: 20px;
+}
+
+.container {
+    padding-top: 100px;
+    width: 60%;
+    margin: 0 auto;
+}
+
+.question-content {
+    text-align: center;
+}
+
+.total-vote {
+    text-align: center;
+}
+
+.vote-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.button-container {
+    text-align: center;
 }

@@ -1,60 +1,50 @@
 window.onload = () => {
-    fetch(`/vote`, {
-            method: 'GET',
-        })
+    fetch('/get-random-question')
         .then((response) => {
             return response.json();
         })
         .then((data) => {
-            if (data.success) {
-                var reciveData = JSON.parse(data.data);
-                console.log(reciveData);
-                let questionContent = document.getElementById("question-content");
-                var questionId = reciveData.questionId;
-                let like = document.getElementById("like");
-                let dislike = document.getElementById("dislike");
-                questionContent.innerText = reciveData.questionContent;
-                like.addEventListener("click", (event) => {
-                    fetch(`/vote/${questionId}/like`, {
-                            method: 'PUT',
-                        })
-                        .then((response) => {
-                            return response.json();
-                        })
-                        .then((data) => {
-                            window.location.href = `/questions/${questionId}`;
-                        })
-                        .catch((error) => {
-                            console.log(error);
-                            window.alert(error.message);
-                        });
-                });
-                dislike.addEventListener("click", (event) => {
-                    fetch(`/vote/${questionId}/dislike`, {
-                            method: 'PUT',
-                        })
-                        .then((response) => {
-                            return response.json();
-                        })
-                        .then((data) => {
-                            window.location.href = `/questions/${questionId}`;
-                        })
-                        .catch((error) => {
-                            console.log(error);
-                            window.alert(error.message);
-                        });
-                });
-                let voteResult = document.getElementById("vote-result");
-                voteResult.addEventListener("click", (event) => {
-                    window.location.href = `/questions/${questionId}`;
-                });
+            document.querySelector('.question-content').innerHTML = data.data.content;
 
-            } else {
-                window.alert("Do not exist");
-            }
+            // listen buttons click
+            document.querySelector('.like-button').addEventListener('click', () => {
+                voteQuestion(data.data.id, 'like');
+            });
+            document.querySelector('.dislike-button').addEventListener('click', () => {
+                voteQuestion(data.data.id, 'dislike');
+            });
+            document.querySelector('.result-button').addEventListener('click', () => {
+                window.location.href = `/questions/${data.data.id}`;
+            });
+            document.querySelector('.other-button').addEventListener('click', () => {
+                window.location.reload();
+            });
         })
         .catch((error) => {
             console.log(error);
             window.alert(error.message);
         });
-}
+};
+
+const voteQuestion = (questionId, selectedVote) => {
+    fetch(`/vote-question`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                questionId: questionId,
+                selectedVote: selectedVote,
+            }),
+        })
+        .then((response) => {
+            return response.json();
+        })
+        .then((data) => {
+            window.location.href = `/questions/${questionId}`;
+        })
+        .catch((error) => {
+            console.log(error);
+            window.alert(error.message);
+        });
+};

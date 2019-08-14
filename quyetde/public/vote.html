@@ -17,15 +17,24 @@
             <li><a href="/">Đáp gọn</a></li>
         </ul>
     </nav>
-    <h1 id="question-content"></h1>
-    <br>
-    <div>
-        <button id="like" style="background-color: blue">Dung/Like</button>
-        <button id="dislike" style="background-color: red">Sai/Dislike</button>
-    </div>
-    <div>
-        <a href="/"><button id="another-question">Cau hoi khac</button></a>
-        <button id="vote-result">Ket qua vote</button>
+    <div class='container'>
+        <div>
+            <h3 class='question-content'></h3>
+        </div>
+
+        <div class='vote-container'>
+            <div>
+                <button class='like-button'>Like</button>
+            </div>
+            <div>
+                <button class='dislike-button'>Dislike</button>
+            </div>
+        </div>
+
+        <div class='button-container'>
+            <button class='result-button'>Vote result</button>
+            <button class='other-button'>Other question</button>
+        </div>
     </div>
     <script src="/vote.js"></script>
 </body>
