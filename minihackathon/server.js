@@ -3,39 +3,26 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const fs = require('fs');
 const mongoose = require('mongoose');
-const QuestionModel = require('./model');
+const GameModel = require('./public/model');
 
-mongoose.connect('mongodb://localhost:8000/minihackathon', { useNewUrlParser: true }, (e) => {
+mongoose.connect('mongodb://localhost:27017/minihackathon', { useNewUrlParser: true }, (e) => {
     if (e) {
         console.log(e);
         process.exit();
     } else {
-        console.log('Connect to mongodb sucess ...');
-
-        // start app
+        console.log("connect to mongodb success");
         const app = express();
-
-        // public folder
         app.use(express.static('public'));
-        app.use(bodyParser.json());
-
-        // method + address
-        // get/post/put/delete
         app.get('/', (req, res) => {
-            // index.html
-            res.sendFile(path.resolve(__dirname, './index.html'));
+            res.sendFile(path.resolve(__dirname, './public/index.html'));
         });
-
-        app.post('/create-player', (req, res) => {
-            const newQuestion = {
-                content: req.body.questionContent,
-            };
-
-            QuestionModel.create(newQuestion, (error, data) => {
+        app.post('/newgames', (req, res) => {
+            console.log(req.query);
+            GamesModel.create(newGame, (error, data) => {
                 if (error) {
                     res.status(500).json({
                         success: false,
-                        message: error.message
+                        message: error.message,
                     });
                 } else {
                     res.status(201).json({
@@ -49,7 +36,16 @@ mongoose.connect('mongodb://localhost:8000/minihackathon', { useNewUrlParser: tr
             });
         });
 
+        app.get('/game/:gameid', (req, res) => {
+            res.sendFile(path.resolve(__dirname, './public/create-player.html'));
 
-
+        });
+        app.listen(8080, (error) => {
+            if (error) {
+                console.log(error);
+            } else {
+                console.log('Server listen on port...');
+            }
+        });
     }
-})
+});
