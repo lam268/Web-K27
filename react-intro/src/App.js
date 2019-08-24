@@ -9,18 +9,46 @@ import './App.css';
 // };
 
 class App extends React.Component {
+    state = {
+        inputValue: '',
+        todos: [],  // {content: '', finished: true/false}
+    };
+
+    handleSubmit = (event) => {
+        event.preventDefault();
+        console.log('Submit');
+        const newtodos = {
+            content: this.state.inputValue,
+            finished: false,
+        }
+        this.setState({
+            todos: newtodos,
+        })
+    };
+
+    handleInputchange = (event) => {
+        const newValue = event.target.value;
+        this.setState({
+            inputValue: newValue,
+        });
+    }
+
     render() {
-        return ( 
+        return (
             <div className='container'>
-                <form className="form-inline">
-        <div className="form-group mx-sm-3 mb-2">
-        <label for="inputPassword2" class="sr-only">Password</label>
-        <input type="text" className="form-control" placeholder="todoitem"></input>
-        </div>
-        <button type="submit" className="btn btn-primary mb-2">Add a to item</button>
-        </form>
+                <div className='result'></div>
+                <div className='Todolist'>
+                    <form className="form-inline" onSubmit={this.handleSubmit}>
+                        <div class="form-group row">
+                            <label for="colFormLabelLg" className="col-sm-2 col-form-label col-form-label-lg">To do list</label>
+                            <div className="col-sm-10">
+                                <input type="text" className="form-control form-control-lg" id="colFormLabelLg" placeholder="To do list" value={this.state.inputValue} onChange={this.handleInputchange}></input>
+                            </div>
+                        </div>
+                        <button type="submit" className="btn btn-primary mb-2">Add a to item</button>
+                    </form>
+                </div>
             </div>
-        
         );
     }
 }
