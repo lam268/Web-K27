@@ -11,16 +11,16 @@ class App extends React.Component {
     nextpageToken: '',
   }
 
-  handleonSubmit = () => {
+  handleonSubmit = (event) => {
     event.preventDefault();
-    fetch(`“https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=25&q=${this.state.searchValue}&type=video&key=AIzaSyA9gQZ-oYomFypZN7PsupZJtOfQqA6Q3qw”
-    `, {})
-      .then((res)=> res.json())
-      .then((data)=> {
+    fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=25&q=${this.state.searchValue}&type=video&key=AIzaSyA9gQZ-oYomFypZN7PsupZJtOfQqA6Q3qw
+    `)
+      .then((res) => res.json())
+      .then((data) => {
         console.log(data);
         this.setState({
           searchResult: [...this.state.searchResult, ...data.items],
-          nextpageToken: data.nextpageToken,
+          nextpageToken: data.nextPageToken,
         })
       })
       .catch((err) => {
@@ -29,7 +29,24 @@ class App extends React.Component {
       })
   }
 
-  handlechange = () => {
+handleclick = (event) => {
+  event.preventDefault();
+    fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=25&q=chipu&type=video&key=AIzaSyA9gQZ-oYomFypZN7PsupZJtOfQqA6Q3qw&pageToken=${this.state.nextpageToken}`)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        this.setState({
+          searchResult: [...this.state.searchResult, ...data.items],
+          nextpageToken: data.nextPageToken,
+        })
+      })
+      .catch((err) => {
+        console.log(err);
+        window.alert(err.message);
+      })
+}
+
+  handlechange = (event) => {
     this.setState({
       searchValue: event.target.value
     })
@@ -59,6 +76,30 @@ class App extends React.Component {
         </div>
         <div className="row">
           <div className="col-md-12" id="result-list">
+            {this.state.searchResult.map((item, index) => {
+              return (
+                <a className='result col-md-12' href={`https://www.youtube.com/watch?v=${item.id.videoId}`} target='_blank'>
+                  <div className='row'>
+                    <div className='col-4'>
+                      <img className="thumnails" src={`${item.snippet.thumbnails.medium.url}`} />
+                    </div>
+                    <div className='col-8'>
+                      <div className='video-info'>
+                        <h2 className='title'>{item.snippet.title}</h2>
+                        <p className='description'>{item.snippet.description}</p>
+                        <span>View >></span>
+                      </div>
+                    </div>
+                  </div>
+                </a>
+              )
+            })
+            }
+          </div>
+        </div>
+        <div className='row'>
+          <div className='col-12'>
+            {this.state.nextpageToken ? (<button className="btn btn-primary form-control" onClick={this.handleclick}>Load more</button>) : null}
           </div>
         </div>
       </div>
