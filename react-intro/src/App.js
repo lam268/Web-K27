@@ -1,6 +1,7 @@
 import React from 'react';
-import logo from './logo.svg';
+// import logo from './logo.svg';
 import './App.css';
+import TodoItem from './components/Todoitem';
 
 // const App = (props) => {
 //     return ( 
@@ -16,13 +17,13 @@ class App extends React.Component {
 
     handleSubmit = (event) => {
         event.preventDefault();
-        console.log('Submit');
         const newtodos = {
             content: this.state.inputValue,
             finished: false,
         }
         this.setState({
-            todos: newtodos,
+            inputValue: '',
+            todos: [...this.state.todos, newtodos],
         })
     };
 
@@ -33,14 +34,54 @@ class App extends React.Component {
         });
     }
 
+    updateTodoItem = (itemIndex) => {
+        this.setState({
+            todos: this.state.todos.map((value, index) => {
+                if (index === itemIndex) {
+                    return {
+                        ...value,
+                        finished: true,
+                    };
+                } else {
+                    return value;
+                }
+            })
+        })
+    }
+
+    deleteTodoItem = (itemIndex) => {
+        this.setState({
+            todos: this.state.todos.filter((value, index) => {
+                if (index === itemIndex) {
+                    return false;
+                }
+                else {
+                    return true;
+                }
+            }
+            )
+        }
+        )
+    }
+
     render() {
         return (
             <div className='container'>
-                <div className='result'></div>
+                <div className='result'>
+                    {this.state.todos.map((value, index) => {
+                        return (
+                            <TodoItem
+                                deleteTodoItem={this.deleteTodoItem}
+                                updateTodoItem={this.updateTodoItem}
+                                itemIndex={index}
+                                finished={value.finished}
+                                value={value.content} />
+                        );
+                    })}
+                </div>
                 <div className='Todolist'>
                     <form className="form-inline" onSubmit={this.handleSubmit}>
-                        <div class="form-group row">
-                            <label for="colFormLabelLg" className="col-sm-2 col-form-label col-form-label-lg">To do list</label>
+                        <div className="form-group row">
                             <div className="col-sm-10">
                                 <input type="text" className="form-control form-control-lg" id="colFormLabelLg" placeholder="To do list" value={this.state.inputValue} onChange={this.handleInputchange}></input>
                             </div>
