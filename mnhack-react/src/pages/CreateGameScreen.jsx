@@ -16,19 +16,42 @@ class CreateGameScreen extends Component {
         })
     }
 
+    handleformsubmit = (event) => {
+        event.preventDefault();
+
+        fetch(`http://localhost:3001/create-game`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                users: [this.state.player1, this.state.player2, this.state.player3, this.state.player4],
+            }),
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                window.location.href = `games/${data.data._id}`
+                console.log(data);
+            })
+            .catch((error) => {
+                console.log(error);
+                window.alert(error.message)
+            })
+    }
+
     render() {
         return (
             <div>
                 <div className="container mt-5">
                     <h2>Score keeper</h2>
 
-                    <form className='mt-4 create-game-form'>
+                    <form className='mt-4 create-game-form' onSubmit={this.handleformsubmit}>
                         <div className="form-group">
                             <input
                                 type="text"
                                 className="form-control player1"
                                 placeholder="Enter player name"
-                                value={this.state.players1}
+                                value={this.state.player1}
                                 onChange={(event) => {
                                     this.handleplayerchange(1, event.target.value)
                                 }}
@@ -40,6 +63,10 @@ class CreateGameScreen extends Component {
                                 type="text"
                                 className="form-control player2"
                                 placeholder="Enter player name"
+                                value={this.state.player2}
+                                onChange={(event) => {
+                                    this.handleplayerchange(2, event.target.value)
+                                }}
                             />
                         </div>
 
@@ -48,6 +75,10 @@ class CreateGameScreen extends Component {
                                 type="text"
                                 className="form-control player3"
                                 placeholder="Enter player name"
+                                value={this.state.player3}
+                                onChange={(event) => {
+                                    this.handleplayerchange(3, event.target.value)
+                                }}
                             />
                         </div>
 
@@ -56,6 +87,10 @@ class CreateGameScreen extends Component {
                                 type="text"
                                 className="form-control player4"
                                 placeholder="Enter player name"
+                                value={this.state.player4}
+                                onChange={(event) => {
+                                    this.handleplayerchange(4, event.target.value)
+                                }}
                             />
                         </div>
 

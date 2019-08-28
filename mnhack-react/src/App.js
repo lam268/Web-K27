@@ -11,7 +11,7 @@ function App() {
     <BrowserRouter>
       <Switch>
         <Route path='/' component={CreateGameScreen} exact={true}></Route>
-        <Route path='/game/:gameId' component={GameDetailScreen} exact={true}></Route>
+        <Route path='/games/:gameId' component={GameDetailScreen} exact={true}></Route>
         <Route path='*' component={NotFoundScreen}></Route>
       </Switch>
     </BrowserRouter>
