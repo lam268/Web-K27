@@ -72,6 +72,7 @@ class RegisterScreen extends Component {
             })
             .then((data) => {
                 if (data.success) {
+                    console.log(data);
                     window.location.href = `/login`;
                 }
                 else {
@@ -94,26 +95,26 @@ class RegisterScreen extends Component {
                             <div id="login-box" className="col-md-12">
                                 <form className="form"> 
                                     <div className="form-group">
-                                        <label for="exampleInputEmail1">Email:</label><br></br>
+                                        <label htmlFor="email">Email:</label><br></br>
                                         <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email"
                                             value={this.state.email}
                                             onChange={this.handleemailChange}></input>
                                     </div>
                                     <div className="form-group">
-                                        <label for="exampleInputEmail1">Fullname:</label><br></br>
+                                        <label htmlFor="fullname">Fullname:</label><br></br>
                                         <input type="text" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter fullname"
                                             value={this.state.fullname}
                                             onChange={this.handlefullnameChange}></input>
                                     </div>
                                     <div className="form-group">
-                                        <label for="exampleInputPassword1">Password:</label><br></br>
+                                        <label htmlFor="password">Password:</label><br></br>
                                         <input type="password" className="form-control" id="exampleInputPassword1" placeholder="Password"
                                             autoComplete="off"
                                             value={this.state.password}
                                             onChange={this.handlePasswordChange}></input>
                                     </div>
                                     <div className="form-group">
-                                        <label for="exampleInputPassword1">Confirm Password:</label><br></br>
+                                        <label htmlFor="password">Confirm Password:</label><br></br>
                                         <input type="password" className="form-control" id="exampleInputPassword1" placeholder=" Confirm password"
                                             autoComplete="off"
                                             value={this.state.confirm_password}
