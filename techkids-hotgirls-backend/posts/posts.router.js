@@ -1,105 +1,71 @@
-const express = require('express');
+var express = require('express');
+var postsRouter = express.Router();
 const PostsModel = require('./posts.model');
+const joi = require('@hapi/joi');
 
-const postRouter = express.Router();
-
-postRouter.get('/', (req, res) => {
-  // sortBy: price
-  // sortOrder: asc|desc
-  const pageNumber = Number(req.query.pageNumber);
-  const pageSize = Number(req.query.pageSize);
-
-  // validate
-  if (isNaN(pageNumber) || isNaN(pageSize)) {
-    res.status(500).json({
-      success: false,
-      message: 'pageNmber && pageSize is invalid'
-    });
-  }
-  if (pageNumber < 1 || pageSize < 1 || pageSize > 20) {
-    res.status(500).json({
-      success: false,
-      message: 'pageNmber && pageSize is invalid'
-    });
-  }
-
-  // query db | 1|-1
-  PostsModel.find({})
-    .sort({createdAt: -1})
-    .skip(pageSize * (pageNumber - 1))
-    .limit(pageSize)
-    .exec((error, data) => {
-      if (error) {
-        res.status(500).json({
-          success: false,
-          message: error.message
+postsRouter.post('/create-post', async (req, res) => {
+    //check login
+    if (!req.session.currentUser || !req.session.currentUser.email) {
+        res.status(403).json({
+            success: false,
+            message: 'Forbiden',
         });
-      } else {
-        PostsModel.find({}).countDocuments().exec((err, total) => {
-          if (err) {
-            res.status(500).json({
-              success: false,
-              message: err.message
+    } else {
+        // validate
+        const postValidateSchema = joi.object().keys({
+            imageUrl: joi.string().required(),
+            content: joi.string().required(),
+
+        });
+        const validateResult = joi.validate(req.body, postValidateSchema);
+        console.log(validateResult.error);
+        if (validateResult.error) {
+            const error = validateResult.error.details[0];
+            res.status(400).json({
+                success: false,
+                message: error.message,
             });
-          } else {
-            res.status(200).json({
-              success: true,
-              data: data,
-              total: total,
-            })
-          }
-        });
-      }
-    });
-});
+        } else {
+            //create new post
+            try {
+                const newpost = await PostsModel.create({
+                    imageUrl: req.body.imageUrl,
+                    content: req.body.content,
+                    author: req.session.currentUser._id,
+                });
+                res.status(201).json({
+                    success: true,
+                    data: newpost,
+                });
+            }
+            catch (error) {
+                res.status(500).json({
+                    success: false,
+                    data: newUser,
+                });
+            };
 
-postRouter.post('/create', (req, res) => {
-  // check user login ?
-  if (req.session.currentUser && req.session.currentUser._id) {
-    // create post
-    const newPost = {
-      content: req.body.content,
-      imageUrl: req.body.imageUrl,
-      author: req.session.currentUser._id,
-    };
-    PostsModel.create(newPost, (error, data) => {
-      if (error) {
-        res.status(500).json({
-          success: false,
-          message: error.message,
-        });
-      } else {
-        res.status(201).json({
-          success: true,
-          data: data,
-        });
-      }
-    });
-  } else {
-    res.status(403).json({
-      success: false,
-      message: 'Unauthenticated',
-    });
-  }
-});
+        }
+        //check login
+    }
 
-// get-by-id
-postRouter.get('/get/:postId', (req, res) => {
-  PostsModel.findById(req.params.postId)
-    .populate('author', 'email fullName')
-    .exec((error, data) => {
-      if (error) {
-        res.status(500).json({
-          success: false,
-          message: error.message,
-        });
-      } else {
-        res.status(200).json({
-          success: true,
-          data: data,
-        });
-      }
-    });
-});
+    postsRouter.get('/:postId', async (req, res) => {
+      try {
+          const post = await PostsModel.findById(req.params.postId)
+          .populate('author', '_id email fullName avatarUrl')
+          .lean();
+          res.status(200).json({
+              success:true,
+              data:post,
+          })
+      } catch (error) {
+          res.status(500).json({
+              success: false,
+              message:error.message,
+          });
+      };
+  })
 
-module.exports = postRouter;
+
+})
+module.exports = postsRouter;

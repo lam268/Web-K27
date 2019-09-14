@@ -3,6 +3,8 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const expressSession = require('express-session');
 const usersRouter = require('./users/users.routes');
+const postsRouter = require('./posts/posts.router');
+const uploadsRouter =require('./uploads/uploads.routes');
 const cors = require('cors')
 
 mongoose.connect('mongodb://localhost:27017/techkids-hotgirls', {useNewUrlParser: true}, (error) => {
@@ -13,6 +15,7 @@ mongoose.connect('mongodb://localhost:27017/techkids-hotgirls', {useNewUrlParser
     const server = express();
 
     // midlewares
+    server.use(express.static('public'));
     server.use(bodyParser.json());
     server.use((req,res,next)=>{
       res.header("Access-Control-Allow-Origin", "http://localhost:3000");
@@ -30,7 +33,8 @@ mongoose.connect('mongodb://localhost:27017/techkids-hotgirls', {useNewUrlParser
 
     // routers
     server.use('/users', usersRouter);
-
+    server.use('/posts', postsRouter);
+    server.use('/uploads', uploadsRouter);
     server.listen(3001, (err) => {
       if (err) {
         throw err;

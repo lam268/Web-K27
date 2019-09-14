@@ -4,7 +4,8 @@ const mongoose = require('mongoose');
 // content: string
 // views: number
 // imageUrl: string
-// author: User
+// author: User => userId
+// lastModifiedAt
 
 const PostSchema = new mongoose.Schema({
   createdAt: {
@@ -28,6 +29,7 @@ const PostSchema = new mongoose.Schema({
     ref: 'User',
     required: true,
   },
+  lastModifiedAt: Date,
 });
 const PostsModel = mongoose.model('Post', PostSchema);
 
